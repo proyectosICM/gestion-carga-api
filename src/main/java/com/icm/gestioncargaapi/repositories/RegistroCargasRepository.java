@@ -1,6 +1,5 @@
 package com.icm.gestioncargaapi.repositories;
 
-import com.icm.gestioncargaapi.dto.RegistroCargasDiaDTO;
 import com.icm.gestioncargaapi.models.RegistroCargasModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
