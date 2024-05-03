@@ -17,9 +17,16 @@ import java.util.Map;
 public interface RegistroCargasRepository extends JpaRepository<RegistroCargasModel, Long> {
     Page<RegistroCargasModel> findByDiaCarga(LocalDate diaCarga, Pageable pageable);
     long countByDiaCarga(LocalDate diaCarga);
+
+    /* Registros */
     @Query("SELECT rc FROM RegistroCargasModel rc WHERE rc.carrilesModel.id = :carrilId")
     List<RegistroCargasModel> findByCarrilId(@Param("carrilId") Long carrilId);
 
-    @Query("SELECT rc FROM RegistroCargasModel rc WHERE rc.diaCarga = :diaCarga AND rc.carrilesModel.id = :carrilId")
-    List<RegistroCargasModel> findByDiaCargaAndCarrilId(@Param("diaCarga") LocalDate diaCarga, @Param("carrilId") Long carrilId);
+
+    @Query("SELECT rc FROM RegistroCargasModel rc WHERE rc.carrilesModel.id = :carrilId")
+    Page<RegistroCargasModel> findByCarrilId(@Param("carrilId") Long carrilId, Pageable pageable);
+
+    @Query("SELECT rc.diaCarga AS fecha, COUNT(rc) AS cantidad FROM RegistroCargasModel rc WHERE rc.carrilesModel.id = :carrilId GROUP BY rc.diaCarga")
+    List<Map<String, Object>> groupByDiaCargaAndCount(@Param("carrilId") Long carrilId);
+
 }

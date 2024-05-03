@@ -17,16 +17,13 @@ import java.util.Optional;
 public class RegistroCargasService {
     @Autowired
     private RegistroCargasRepository registroCargasRepository;
-    public long countByDiaCarga(LocalDate diaCarga) {
-        return registroCargasRepository.countByDiaCarga(diaCarga);
+
+    public List<Map<String, Object>> groupByDiaCargaAndCount(Long carrilId) {
+        return registroCargasRepository.groupByDiaCargaAndCount(carrilId);
     }
 
     public List<RegistroCargasModel> findByCarrilId(Long carrilId) {
         return registroCargasRepository.findByCarrilId(carrilId);
-    }
-
-    public List<RegistroCargasModel> findByDiaCargaAndCarrilId(LocalDate diaCarga, Long carrilId) {
-        return registroCargasRepository.findByDiaCargaAndCarrilId(diaCarga, carrilId);
     }
 
     public List<RegistroCargasModel> listarRegistros(){

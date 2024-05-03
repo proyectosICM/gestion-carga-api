@@ -31,10 +31,11 @@ public class RegistroCargasController {
     private RegistroCargasValidator registroCargasValidator;
     @Autowired
     private ErrorResponseBuilder errorResponseBuilder;
-    @GetMapping("/count")
-    public ResponseEntity<Long> countRegistroCargasByDiaCarga(@RequestParam LocalDate diaCarga) {
-        long count = registroCargasService.countByDiaCarga(diaCarga);
-        return new ResponseEntity<>(count, HttpStatus.OK);
+
+    @GetMapping("/count-day")
+    public ResponseEntity<List<Map<String, Object>>> groupByDiaCargaAndCount(@RequestParam Long carrilId) {
+        List<Map<String, Object>> result = registroCargasService.groupByDiaCargaAndCount(carrilId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/registros/{carrilId}")
@@ -42,13 +43,6 @@ public class RegistroCargasController {
         return registroCargasService.findByCarrilId(carrilId);
     }
 
-    @GetMapping("/registros-dia")
-    public List<RegistroCargasModel> findByDiaCargaAndCarrilId(
-            @RequestParam("diaCarga") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate diaCarga,
-            @RequestParam("carrilId") Long carrilId) {
-        System.out.println(carrilId);
-        return registroCargasService.findByDiaCargaAndCarrilId(diaCarga, carrilId);
-    }
     @GetMapping
     public ResponseEntity<?> getAllRegistrosCargas() {
         return new ResponseEntity<>(registroCargasService.listarRegistros(), HttpStatus.OK);
