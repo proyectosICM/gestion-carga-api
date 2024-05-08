@@ -32,16 +32,57 @@ public class RegistroCargasController {
     @Autowired
     private ErrorResponseBuilder errorResponseBuilder;
 
-    @GetMapping("/count-day")
-    public ResponseEntity<List<Map<String, Object>>> groupByDiaCargaAndCount(@RequestParam Long carrilId) {
-        List<Map<String, Object>> result = registroCargasService.groupByDiaCargaAndCount(carrilId);
+    /**
+     * Estadisticas y conteos
+     */
+
+    /* Conteo de cargas en un dia de todos los carriles  */
+    @GetMapping("/count-by-carril-and-date")
+    public ResponseEntity<List<Map<String, Object>>> groupByCarrilAndDiaCargaAndCount() {
+        List<Map<String, Object>> result = registroCargasService.groupByCarrilAndDiaCargaAndCount();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    /* Conteo de cargas en un dia de un carril */
+    @GetMapping("/carga-diaria-carril/{id}")
+    public ResponseEntity<Map<String, Object>> groupByDiaCargaAndCount(@PathVariable Long id) {
+        Map<String, Object> result = registroCargasService.groupByDiaCargaAndCount(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/ultimos-7-dias/{carrilId}")
+    public ResponseEntity<List<Map<String, Object>>> obtenerRegistrosPorCarrilYUltimos7Dias(@PathVariable Long carrilId) {
+        List<Map<String, Object>> registrosPorDia = registroCargasService.obtenerRegistrosPorCarrilYDia(carrilId);
+        return new ResponseEntity<>(registrosPorDia, HttpStatus.OK);
+    }
+
+    @GetMapping("/semana-general")
+    public List<Map<String, Object>> obtenerRegistrosPorCarrilYDia() {
+        return registroCargasService.obtenerRegistrosPorCarrilYDia();
+    }
+
+    /**
+     *  Registros Listados y Paginado
+     */
 
     @GetMapping("/registros/{carrilId}")
     public List<RegistroCargasModel> findByCarrilId(@PathVariable Long carrilId) {
         return registroCargasService.findByCarrilId(carrilId);
     }
+
+    @GetMapping("/registros-page/{carrilId}")
+    public Page<RegistroCargasModel> findByCarrilIdOrderByDesc(@PathVariable Long carrilId,
+                                                               @RequestParam(defaultValue = "0") int page,
+                                                                @RequestParam(defaultValue = "6") int size) {
+        Pageable pageRequest = PageRequest.of(page, size);
+        return registroCargasService.findByCarrilIdOrderByDesc(carrilId, pageRequest);
+    }
+
+
+
+    /**
+     * CRUD
+     */
 
     @GetMapping
     public ResponseEntity<?> getAllRegistrosCargas() {
