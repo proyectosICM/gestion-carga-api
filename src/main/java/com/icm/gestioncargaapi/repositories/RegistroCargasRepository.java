@@ -22,7 +22,13 @@ public interface RegistroCargasRepository extends JpaRepository<RegistroCargasMo
      */
 
     /* Conteo de cargas en un dia de todos los carriles  */
-    @Query("SELECT rc.carrilesModel.id AS carrilId, rc.diaCarga AS fecha, COUNT(rc) AS cantidad FROM RegistroCargasModel rc WHERE rc.diaCarga = :fecha GROUP BY rc.carrilesModel.id ")
+    @Query("SELECT rc.carrilesModel.id AS carrilId," +
+            "rc.carrilesModel.nombre AS carrilNombre, " +
+            " rc.diaCarga AS fecha," +
+            " COUNT(rc) AS cantidad " +
+            "FROM RegistroCargasModel rc " +
+            "WHERE rc.diaCarga = :fecha " +
+            "GROUP BY rc.carrilesModel.id ")
     List<Map<String, Object>> groupByCarrilAndDiaCargaAndCount(@Param("fecha") LocalDate fecha);
 
     /* Conteo de cargas en un dia de un carril */
@@ -55,8 +61,9 @@ public interface RegistroCargasRepository extends JpaRepository<RegistroCargasMo
 
     //Ultimos 7 dias - Todos
     @Query("SELECT rc.carrilesModel.id AS carrilId, " +
-            "       rc.diaCarga AS fecha, " +
-            "       COUNT(rc) AS cantidad " +
+            "rc.carrilesModel.nombre AS carrilNombre, " +
+            "rc.diaCarga AS fecha, " +
+            "COUNT(rc) AS cantidad " +
             "FROM RegistroCargasModel rc " +
             "WHERE rc.diaCarga >= :fechaInicio AND rc.diaCarga <= :fechaFin " +
             "GROUP BY rc.carrilesModel.id, rc.diaCarga")

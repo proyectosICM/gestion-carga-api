@@ -30,13 +30,15 @@ public class RegistroCargasService {
         List<Map<String, Object>> response = new ArrayList<>();
         for (Map<String, Object> result : results) {
             LocalDate fecha = (LocalDate) result.get("fecha");
-            int carrilId = ((Number) result.get("carrilId")).intValue(); // Convertir de Long a int
+            int carrilId = ((Number) result.get("carrilId")).intValue();
+            String carrilNombre = (String) result.get("carrilNombre");
             long cantidad = (long) result.get("cantidad");
 
             Map<String, Object> entry = new HashMap<>();
             entry.put("fecha", Arrays.asList(fecha.getYear(), fecha.getMonthValue(), fecha.getDayOfMonth()));
             entry.put("cantidad", cantidad);
             entry.put("carrilId", carrilId);
+            entry.put("carrilNombre", carrilNombre);
             response.add(entry);
         }
 
