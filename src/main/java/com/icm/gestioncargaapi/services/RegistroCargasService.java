@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -169,6 +170,11 @@ public class RegistroCargasService {
     }
 
     public RegistroCargasModel crearRegistroCarga(RegistroCargasModel registroCargasModel){
+        LocalDate fechaActualPeru = LocalDate.now(ZoneId.of("America/Lima"));
+
+        // Establecer la fecha actual de Perú en el modelo
+        registroCargasModel.setDiaCarga(fechaActualPeru);
+        registroCargasModel.setTiempoCarga(Duration.ofNanos((long) (3E9)));
         return registroCargasRepository.save(registroCargasModel);
     }
 

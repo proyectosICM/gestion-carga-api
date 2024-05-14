@@ -109,11 +109,11 @@ public class RegistroCargasController {
 
     @PostMapping()
     public ResponseEntity<?> createRegistroCarga(@RequestBody RegistroCargasModel registroCargas) {
-        ResponseEntity<?> validationResponse = registroCargasValidator.validarDatos(registroCargas);
+      /*  ResponseEntity<?> validationResponse = registroCargasValidator.validarDatos(registroCargas);
         if (validationResponse != null) {
             return validationResponse;
         }
-
+        */
         RegistroCargasModel savedRegistroCarga = registroCargasService.crearRegistroCarga(registroCargas);
         return new ResponseEntity<>(savedRegistroCarga, HttpStatus.CREATED);
     }
