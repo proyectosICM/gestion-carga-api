@@ -27,7 +27,7 @@ public class RegistroCargasModel {
     private LocalTime horaFin;
 
     @Column(nullable = false)
-    private Duration tiempoCarga;
+    private LocalTime tiempoCarga;
 
     @Column(nullable = false)
     private LocalDate diaCarga;

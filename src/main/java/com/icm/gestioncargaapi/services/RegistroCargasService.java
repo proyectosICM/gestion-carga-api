@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -173,10 +174,24 @@ public class RegistroCargasService {
         LocalDate fechaActualPeru = LocalDate.now(ZoneId.of("America/Lima"));
 
         // Establecer la fecha actual de Perú en el modelo
-        registroCargasModel.setDiaCarga(fechaActualPeru);
-        registroCargasModel.setTiempoCarga(Duration.ofNanos((long) (3E9)));
+        if (registroCargasModel.getDiaCarga() == null) {
+            registroCargasModel.setDiaCarga(fechaActualPeru);
+        }
+
+        // Calcular el tiempo de carga como la diferencia entre horaInicio y horaFin
+        LocalTime horaInicio = registroCargasModel.getHoraInicio();
+        LocalTime horaFin = registroCargasModel.getHoraFin();
+        LocalTime tiempoCarga = horaFin.minusHours(horaInicio.getHour())
+                .minusMinutes(horaInicio.getMinute())
+                .minusSeconds(horaInicio.getSecond());
+
+        // Establecer el tiempo de carga en el modelo
+        registroCargasModel.setTiempoCarga(tiempoCarga);
+
+        // Guardar el modelo en la base de datos
         return registroCargasRepository.save(registroCargasModel);
     }
+
 
     public RegistroCargasModel editarRegistroCarga(Long id, RegistroCargasModel registroCargas){
         Optional<RegistroCargasModel> existing = registroCargasRepository.findById(id);
