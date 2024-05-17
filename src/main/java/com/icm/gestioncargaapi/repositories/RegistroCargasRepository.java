@@ -42,10 +42,12 @@ public interface RegistroCargasRepository extends JpaRepository<RegistroCargasMo
     @Query("SELECT rc FROM RegistroCargasModel rc WHERE rc.carrilesModel.id = :carrilId ORDER BY rc.id DESC")
     List<RegistroCargasModel> findByCarrilId(@Param("carrilId") Long carrilId);
 
-
+/*
     @Query("SELECT rc FROM RegistroCargasModel rc WHERE rc.carrilesModel.id = :carrilId ORDER BY rc.id DESC")
     Page<RegistroCargasModel> findByCarrilIdOrderByDesc(@Param("carrilId") Long carrilId, Pageable pageable);
-
+*/
+    @Query("SELECT rc FROM RegistroCargasModel rc WHERE rc.carrilesModel.id = :carrilId ORDER BY rc.diaCarga DESC, rc.horaInicio DESC")
+    Page<RegistroCargasModel> findByCarrilIdOrderByDesc(@Param("carrilId") Long carrilId, Pageable pageable);
 
     //Ultimos 7 dias - 1
     @Query("SELECT rc.diaCarga AS fecha, " +

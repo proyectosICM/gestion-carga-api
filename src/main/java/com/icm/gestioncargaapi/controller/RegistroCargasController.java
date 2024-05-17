@@ -73,7 +73,7 @@ public class RegistroCargasController {
     @GetMapping("/registros-page/{carrilId}")
     public Page<RegistroCargasModel> findByCarrilIdOrderByDesc(@PathVariable Long carrilId,
                                                                @RequestParam(defaultValue = "0") int page,
-                                                                @RequestParam(defaultValue = "6") int size) {
+                                                                @RequestParam(defaultValue = "12") int size) {
         Pageable pageRequest = PageRequest.of(page, size);
         return registroCargasService.findByCarrilIdOrderByDesc(carrilId, pageRequest);
     }
