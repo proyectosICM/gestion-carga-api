@@ -28,7 +28,8 @@ public interface RegistroCargasRepository extends JpaRepository<RegistroCargasMo
             " COUNT(rc) AS cantidad " +
             "FROM RegistroCargasModel rc " +
             "WHERE rc.diaCarga = :fecha " +
-            "GROUP BY rc.carrilesModel.id ")
+            "GROUP BY rc.carrilesModel.id, rc.carrilesModel.nombre, rc.diaCarga " +
+            "ORDER BY rc.carrilesModel.id ASC")
     List<Map<String, Object>> groupByCarrilAndDiaCargaAndCount(@Param("fecha") LocalDate fecha);
 
     /* Conteo de cargas en un dia de un carril */
