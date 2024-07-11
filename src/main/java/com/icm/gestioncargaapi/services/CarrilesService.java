@@ -19,6 +19,11 @@ public class CarrilesService {
     public List<CarrilesModel> listarTodos(){
         return carrilesRepository.findAll();
     }
+
+    public List<CarrilesModel> findBySedeId(Long sedeId) {
+        return carrilesRepository.findBySedesModelId(sedeId);
+    }
+
     public Page<CarrilesModel> listarTodosPaginado(Pageable pageable){
         return carrilesRepository.findAll(pageable);
     }
@@ -36,6 +41,7 @@ public class CarrilesService {
         if (existing.isPresent()) {
             CarrilesModel data = existing.get();
             data.setNombre(carrilesModel.getNombre());
+            data.setSedesModel(carrilesModel.getSedesModel());
             return carrilesRepository.save(data);
         }
         return null;

@@ -2,6 +2,7 @@ package com.icm.gestioncargaapi.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,8 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "carriles")
-public class CarrilesModel {
+@Builder
+@Table(name = "empresas")
+public class EmpresasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
@@ -19,7 +21,7 @@ public class CarrilesModel {
     @Column(nullable = false)
     private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "sede", referencedColumnName = "id", nullable = false)
-    private SedesModel sedesModel;
+    private String username;
+
+    private String password;
 }

@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "carriles")
-public class CarrilesModel {
+@Table(name = "sedes")
+public class SedesModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
@@ -20,6 +20,6 @@ public class CarrilesModel {
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "sede", referencedColumnName = "id", nullable = false)
-    private SedesModel sedesModel;
+    @JoinColumn(name = "empresa", referencedColumnName = "id", nullable = false)
+    private EmpresasModel empresasModel;
 }

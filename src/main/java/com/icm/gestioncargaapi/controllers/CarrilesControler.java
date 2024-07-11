@@ -1,4 +1,4 @@
-package com.icm.gestioncargaapi.controller;
+package com.icm.gestioncargaapi.controllers;
 
 import com.icm.gestioncargaapi.components.ErrorResponseBuilder;
 import com.icm.gestioncargaapi.models.CarrilesModel;
@@ -11,10 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("api/carriles")
@@ -31,6 +30,12 @@ public class CarrilesControler {
     @GetMapping
     public ResponseEntity<?> getAllCarriles() {
         return new ResponseEntity<>(carrilesService.listarTodos(), HttpStatus.OK);
+    }
+
+    @GetMapping("/sede/{sedeId}")
+    public ResponseEntity<List<CarrilesModel>> findBySedeId(@PathVariable Long sedeId) {
+        List<CarrilesModel> carriles = carrilesService.findBySedeId(sedeId);
+        return ResponseEntity.ok(carriles);
     }
 
     @GetMapping("/page")
