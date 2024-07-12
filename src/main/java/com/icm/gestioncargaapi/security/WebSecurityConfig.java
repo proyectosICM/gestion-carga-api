@@ -78,8 +78,9 @@ public class WebSecurityConfig {
                 .logout(logout -> logout.disable())
                 .exceptionHandling(exceptionHandling -> exceptionHandling.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/imagen/**").permitAll()
-                        .requestMatchers("/api/baterias/**").permitAll()
+                        .requestMatchers("/api/registro-cargas/**").permitAll()
+                        .requestMatchers("/api/empresas/**").permitAll()
+                        .requestMatchers("/time/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/doc/**").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()

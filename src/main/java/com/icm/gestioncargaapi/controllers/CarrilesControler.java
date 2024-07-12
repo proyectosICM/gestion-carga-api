@@ -1,6 +1,7 @@
 package com.icm.gestioncargaapi.controllers;
 
 import com.icm.gestioncargaapi.components.ErrorResponseBuilder;
+import com.icm.gestioncargaapi.dto.SedeCarrilesDTO;
 import com.icm.gestioncargaapi.models.CarrilesModel;
 import com.icm.gestioncargaapi.services.CarrilesService;
 import com.icm.gestioncargaapi.validators.CarrilesValidator;
@@ -26,6 +27,11 @@ public class CarrilesControler {
 
     @Autowired
     private ErrorResponseBuilder errorResponseBuilder;
+
+    @GetMapping("/countBySede")
+    public List<SedeCarrilesDTO> contarCarrilesPorSede() {
+        return carrilesService.contarCarrilesPorSede();
+    }
 
     @GetMapping
     public ResponseEntity<?> getAllCarriles() {

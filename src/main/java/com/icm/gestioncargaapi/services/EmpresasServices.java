@@ -49,7 +49,10 @@ public class EmpresasServices {
 
             empresa.setNombre(empresasModel.getNombre());
             empresa.setUsername(empresasModel.getUsername());
-            empresa.setPassword(passwordEncoder.encode(empresasModel.getPassword()));
+            if (empresasModel.getPassword() != null && !empresasModel.getPassword().isEmpty()) {
+                empresa.setPassword(passwordEncoder.encode(empresasModel.getPassword()));
+            }
+
 
             return empresasRepository.save(empresa);
         } else {

@@ -16,6 +16,7 @@ public class SedesController {
     @Autowired
     private SedesService sedesService;
 
+
     @GetMapping
     public List<SedesModel> getAllSedes() {
         return sedesService.getAll();

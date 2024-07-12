@@ -1,5 +1,6 @@
 package com.icm.gestioncargaapi.services;
 
+import com.icm.gestioncargaapi.dto.SedeCarrilesDTO;
 import com.icm.gestioncargaapi.models.CarrilesModel;
 import com.icm.gestioncargaapi.repositories.CarrilesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CarrilesService {
 
     @Autowired
     CarrilesRepository carrilesRepository;
+
+    public List<SedeCarrilesDTO> contarCarrilesPorSede() {
+        List<Object[]> results = carrilesRepository.countCarrilesBySede();
+        return results.stream()
+                .map(result -> new SedeCarrilesDTO((Long) result[0], (Long) result[1]))
+                .collect(Collectors.toList());
+    }
 
     public List<CarrilesModel> listarTodos(){
         return carrilesRepository.findAll();
