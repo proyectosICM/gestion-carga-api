@@ -15,6 +15,10 @@ public class SedesService {
     @Autowired
     private SedesRepository sedesRepository;
 
+    public List<SedesModel> getSedesByEmpresaId(Long empresaId) {
+        return sedesRepository.findByEmpresasModelId(empresaId);
+    }
+
     public List<SedesModel> getAll(){
         return sedesRepository.findAll();
     }
@@ -33,6 +37,7 @@ public class SedesService {
         if (existingSede.isPresent()) {
             SedesModel sede = existingSede.get();
             sede.setNombre(sedesModel.getNombre());
+            sede.setEmpresasModel(sedesModel.getEmpresasModel());
             // Actualiza otros campos según sea necesario
 
             return sedesRepository.save(sede);

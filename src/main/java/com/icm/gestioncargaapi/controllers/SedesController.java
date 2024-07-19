@@ -16,6 +16,11 @@ public class SedesController {
     @Autowired
     private SedesService sedesService;
 
+    @GetMapping("/xempresa/{empresaId}")
+    public ResponseEntity<List<SedesModel>> getSedesByEmpresaId(@PathVariable Long empresaId) {
+        List<SedesModel> sedes = sedesService.getSedesByEmpresaId(empresaId);
+        return ResponseEntity.ok(sedes);
+    }
 
     @GetMapping
     public List<SedesModel> getAllSedes() {
