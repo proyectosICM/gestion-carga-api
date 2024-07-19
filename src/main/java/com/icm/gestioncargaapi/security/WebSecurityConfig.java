@@ -64,7 +64,7 @@ public class WebSecurityConfig {
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager(httpSecurity.getSharedObject(AuthenticationConfiguration.class)));
         jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
-        HeaderWriter headerWriter = new StaticHeadersWriter("Access-Control-Allow-Origin", "*");
+        HeaderWriter headerWriter = new StaticHeadersWriter("Access-Control-Allow-Origin", "https://samloto.com:4003");
 
         httpSecurity
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
