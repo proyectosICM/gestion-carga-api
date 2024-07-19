@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CarrilesRepository extends JpaRepository<CarrilesModel, Long> {
-    List<CarrilesModel> findByEmpresaModelId(Long id);
+    List<CarrilesModel> findByEmpresasModelId(Long id);
 
 }
