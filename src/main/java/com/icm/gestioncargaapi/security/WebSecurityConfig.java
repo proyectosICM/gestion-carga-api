@@ -80,6 +80,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/registro-cargas/**").permitAll()
                         .requestMatchers("/api/empresas/**").permitAll()
+                        .requestMatchers("/api/carriles/**").permitAll()
                         .requestMatchers("/time/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/doc/**").permitAll()

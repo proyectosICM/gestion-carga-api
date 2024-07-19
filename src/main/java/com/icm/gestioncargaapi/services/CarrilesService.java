@@ -1,6 +1,5 @@
 package com.icm.gestioncargaapi.services;
 
-import com.icm.gestioncargaapi.dto.SedeCarrilesDTO;
 import com.icm.gestioncargaapi.models.CarrilesModel;
 import com.icm.gestioncargaapi.repositories.CarrilesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CarrilesService {
@@ -18,45 +16,37 @@ public class CarrilesService {
     @Autowired
     CarrilesRepository carrilesRepository;
 
-    public List<SedeCarrilesDTO> contarCarrilesPorSede() {
-        List<Object[]> results = carrilesRepository.countCarrilesBySede();
-        return results.stream()
-                .map(result -> new SedeCarrilesDTO((Long) result[0], (Long) result[1]))
-                .collect(Collectors.toList());
-    }
-
-    public List<CarrilesModel> listarTodos(){
+    public List<CarrilesModel> findAll(){
         return carrilesRepository.findAll();
     }
-
-    public List<CarrilesModel> findBySedeId(Long sedeId) {
-        return carrilesRepository.findBySedesModelId(sedeId);
-    }
-
-    public Page<CarrilesModel> listarTodosPaginado(Pageable pageable){
+    public Page<CarrilesModel> findAllPagened(Pageable pageable){
         return carrilesRepository.findAll(pageable);
     }
 
-    public Optional<CarrilesModel> listarPorId(Long id){
+    public Optional<CarrilesModel> findById(Long id){
         return carrilesRepository.findById(id);
     }
 
-    public CarrilesModel guardarCarril(CarrilesModel carrilesModel){
+    public List<CarrilesModel> findByEmpresaId(Long sedeId) {
+        return carrilesRepository.findByEmpresaModelId(sedeId);
+    }
+
+    public CarrilesModel saveCarril(CarrilesModel carrilesModel){
         return carrilesRepository.save(carrilesModel);
     }
 
-    public CarrilesModel actualizarCarril(Long id, CarrilesModel carrilesModel){
+    public CarrilesModel updateCarril(Long id, CarrilesModel carrilesModel){
         Optional<CarrilesModel> existing  = carrilesRepository.findById(id);
         if (existing.isPresent()) {
             CarrilesModel data = existing.get();
             data.setNombre(carrilesModel.getNombre());
-            data.setSedesModel(carrilesModel.getSedesModel());
+            data.setEmpresasModel(carrilesModel.getEmpresasModel());
             return carrilesRepository.save(data);
         }
         return null;
     }
 
-    public void eliminarCarril(Long id){
+    public void deleteCarril(Long id){
         carrilesRepository.deleteById(id);
     }
 }

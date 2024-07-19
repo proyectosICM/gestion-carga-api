@@ -20,6 +20,6 @@ public class CarrilesModel {
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "sede", referencedColumnName = "id", nullable = false)
-    private SedesModel sedesModel;
+    @JoinColumn(name = "empresa", referencedColumnName = "id", nullable = false)
+    private EmpresasModel empresasModel;
 }

@@ -28,34 +28,22 @@ public class CarrilesControler {
     @Autowired
     private ErrorResponseBuilder errorResponseBuilder;
 
-    @GetMapping("/countBySede")
-    public List<SedeCarrilesDTO> contarCarrilesPorSede() {
-        return carrilesService.contarCarrilesPorSede();
-    }
-
     @GetMapping
-    public ResponseEntity<?> getAllCarriles() {
-        return new ResponseEntity<>(carrilesService.listarTodos(), HttpStatus.OK);
-    }
-
-    @GetMapping("/sede/{sedeId}")
-    public ResponseEntity<List<CarrilesModel>> findBySedeId(@PathVariable Long sedeId) {
-        List<CarrilesModel> carriles = carrilesService.findBySedeId(sedeId);
-        return ResponseEntity.ok(carriles);
+    public ResponseEntity<?> findAll() {
+        return new ResponseEntity<>(carrilesService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/page")
-    public ResponseEntity<Page<CarrilesModel>> getAllCarrilesPaginated(@RequestParam(defaultValue = "0") int page,
-                                                                       @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<Page<CarrilesModel>> findAllPagened(@RequestParam(defaultValue = "0") int page,
+                                                              @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<CarrilesModel> carrilesPage = carrilesService.listarTodosPaginado(pageable);
+        Page<CarrilesModel> carrilesPage = carrilesService.findAllPagened(pageable);
         return new ResponseEntity<>(carrilesPage, HttpStatus.OK);
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCarrilById(@PathVariable Long id) {
-        Optional<CarrilesModel> existing = carrilesService.listarPorId(id);
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        Optional<CarrilesModel> existing = carrilesService.findById(id);
         if (existing.isPresent()) {
             return ResponseEntity.ok(existing.get());
         } else {
@@ -63,14 +51,20 @@ public class CarrilesControler {
         }
     }
 
+    @GetMapping("/empresa/{empresaId}")
+    public ResponseEntity<List<CarrilesModel>> findByEmpresaId(@PathVariable Long sedeId) {
+        List<CarrilesModel> carriles = carrilesService.findByEmpresaId(sedeId);
+        return ResponseEntity.ok(carriles);
+    }
+
     @PostMapping
-    public ResponseEntity<?> createCarril(@RequestBody CarrilesModel carril) {
+    public ResponseEntity<?> saveCarril(@RequestBody CarrilesModel carril) {
         ResponseEntity<?> validationResponse = carrilesValidator.validarDatos(carril);
         if (validationResponse != null) {
             return validationResponse;
         }
 
-        CarrilesModel savedCarril = carrilesService.guardarCarril(carril);
+        CarrilesModel savedCarril = carrilesService.saveCarril(carril);
         return new ResponseEntity<>(savedCarril, HttpStatus.CREATED);
     }
 
@@ -82,7 +76,7 @@ public class CarrilesControler {
             return validationResponse;
         }
 
-        CarrilesModel updatedCarril = carrilesService.actualizarCarril(id, carril);
+        CarrilesModel updatedCarril = carrilesService.updateCarril(id, carril);
         if (updatedCarril != null) {
             return new ResponseEntity<>(updatedCarril, HttpStatus.OK);
         } else {
@@ -92,12 +86,12 @@ public class CarrilesControler {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCarril(@PathVariable Long id) {
-        Optional<CarrilesModel> carril = carrilesService.listarPorId(id);
+        Optional<CarrilesModel> carril = carrilesService.findById(id);
         if (!carril.isPresent()) {
             return errorResponseBuilder.buildNotFoundError("el carril");
         }
 
-        carrilesService.eliminarCarril(id);
+        carrilesService.deleteCarril(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
