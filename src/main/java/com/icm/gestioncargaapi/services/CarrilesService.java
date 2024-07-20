@@ -27,8 +27,8 @@ public class CarrilesService {
         return carrilesRepository.findById(id);
     }
 
-    public List<CarrilesModel> findByEmpresaId(Long sedeId) {
-        return carrilesRepository.findByEmpresasModelId(sedeId);
+    public List<CarrilesModel> findByEmpresaId(Long empresaId) {
+        return carrilesRepository.findByEmpresasModelId(empresaId);
     }
 
     public CarrilesModel saveCarril(CarrilesModel carrilesModel){

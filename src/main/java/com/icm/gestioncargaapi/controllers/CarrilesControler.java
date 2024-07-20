@@ -52,8 +52,8 @@ public class CarrilesControler {
     }
 
     @GetMapping("/empresa/{empresaId}")
-    public ResponseEntity<List<CarrilesModel>> findByEmpresaId(@PathVariable Long sedeId) {
-        List<CarrilesModel> carriles = carrilesService.findByEmpresaId(sedeId);
+    public ResponseEntity<List<CarrilesModel>> findByEmpresaId(@PathVariable Long empresaId) {
+        List<CarrilesModel> carriles = carrilesService.findByEmpresaId(empresaId);
         return ResponseEntity.ok(carriles);
     }
 
