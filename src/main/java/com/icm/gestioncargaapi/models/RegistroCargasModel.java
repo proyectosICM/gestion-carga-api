@@ -35,4 +35,8 @@ public class RegistroCargasModel {
     @ManyToOne
     @JoinColumn(name = "carril", referencedColumnName = "id", nullable = false)
     private CarrilesModel carrilesModel;
+
+    @ManyToOne
+    @JoinColumn(name = "empresa", referencedColumnName = "id", nullable = false)
+    private EmpresasModel empresasModel;
 }
