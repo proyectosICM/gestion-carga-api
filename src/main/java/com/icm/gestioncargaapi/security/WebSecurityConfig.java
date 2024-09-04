@@ -47,7 +47,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://samloto.com:4003"));
+        configuration.setAllowedOrigins(Arrays.asList("https://samloto.com:4003" ,"http://localhost:3002"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
@@ -64,7 +64,7 @@ public class WebSecurityConfig {
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager(httpSecurity.getSharedObject(AuthenticationConfiguration.class)));
         jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
-        HeaderWriter headerWriter = new StaticHeadersWriter("Access-Control-Allow-Origin", "https://samloto.com:4003");
+        HeaderWriter headerWriter = new StaticHeadersWriter("Access-Control-Allow-Origin", "*");
 
         httpSecurity
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
